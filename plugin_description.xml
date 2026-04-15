@@ -1,0 +1,11 @@
+<library path="rviz_light_display">
+  <class
+    name="rviz_light_display/LightDisplay"
+    type="rviz_light_display::LightDisplay"
+    base_class_type="rviz_common::Display"
+  >
+    <description>
+      Displays a status light whose pose is configured in rviz and whose color/brightness are driven by a topic.
+    </description>
+  </class>
+</library>
