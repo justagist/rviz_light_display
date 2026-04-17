@@ -43,8 +43,7 @@ LightDisplay::LightDisplay()
           SLOT(updateVisualProperties()), this
       )),
       default_alpha_property_(new rviz_common::properties::FloatProperty(
-          "Default Alpha", 1.0f,
-          "Initial light transparency used until a message sets a runtime color.", this,
+          "Default Alpha", 1.0f, "Initial light transparency used until a message sets a runtime color.", this,
           SLOT(updateVisualProperties()), this
       )),
       off_alpha_property_(new rviz_common::properties::FloatProperty(
@@ -95,12 +94,15 @@ void LightDisplay::update(float wall_dt, float ros_dt)
 
 void LightDisplay::processMessage(rviz_light_display::msg::LightCommand::ConstSharedPtr msg)
 {
-    if (!msg->keep_color) {
+    if (!msg->keep_color)
+    {
         active_color_ = Ogre::ColourValue(
             clampUnit(msg->color.r), clampUnit(msg->color.g), clampUnit(msg->color.b), clampUnit(msg->color.a)
         );
         has_runtime_color_ = true;
-    } else {
+    }
+    else
+    {
         applyConfiguredColorIfNeeded();
     }
 

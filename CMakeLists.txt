@@ -1,8 +1,11 @@
 cmake_minimum_required(VERSION 3.20)
 project(rviz_light_display)
 
-include($ENV{WORKSPACE}/src/utils/cmake/project_defaults.cmake)
-setup_project()
+if(NOT CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD 17)
+endif()
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(CMAKE_AUTOMOC ON)
 set(LIGHT_DISPLAY_LIBRARY ${PROJECT_NAME}_plugin)
