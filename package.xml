@@ -5,8 +5,8 @@
   <version>0.0.1</version>
   <description>Self-contained rviz2 plugin for visualizing status lights with fixed poses and runtime state updates.</description>
 
-  <maintainer email="codex@example.com">Codex</maintainer>
-  <license>Apache License 2.0</license>
+  <maintainer email="mail@saifsidhik.page">Saif Sidhik</maintainer>
+  <license>TODO</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
   <buildtool_depend>rosidl_default_generators</buildtool_depend>
