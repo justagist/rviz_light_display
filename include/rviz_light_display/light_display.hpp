@@ -40,11 +40,14 @@ private:
     geometry_msgs::msg::Pose getConfiguredPose() const;
     void updateScenePose();
     void updateLightMaterial();
+    void applyConfiguredColorIfNeeded();
 
     rviz_common::properties::TfFrameProperty* frame_property_;
     rviz_common::properties::VectorProperty* position_property_;
     rviz_common::properties::QuaternionProperty* orientation_property_;
     rviz_common::properties::FloatProperty* diameter_property_;
+    rviz_common::properties::ColorProperty* default_color_property_;
+    rviz_common::properties::FloatProperty* default_alpha_property_;
     rviz_common::properties::FloatProperty* off_alpha_property_;
     rviz_common::properties::ColorProperty* off_color_property_;
 
@@ -53,6 +56,7 @@ private:
     Ogre::ColourValue active_color_;
     float brightness_;
     bool enabled_;
+    bool has_runtime_color_;
 };
 
 } // namespace rviz_light_display

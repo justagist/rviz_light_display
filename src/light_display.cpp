@@ -38,6 +38,15 @@ LightDisplay::LightDisplay()
       diameter_property_(new rviz_common::properties::FloatProperty(
           "Diameter", 0.05f, "Rendered diameter of the light in meters.", this, SLOT(updateVisualProperties()), this
       )),
+      default_color_property_(new rviz_common::properties::ColorProperty(
+          "Default Color", QColor(255, 0, 0), "Initial light color used until a message sets a runtime color.", this,
+          SLOT(updateVisualProperties()), this
+      )),
+      default_alpha_property_(new rviz_common::properties::FloatProperty(
+          "Default Alpha", 1.0f,
+          "Initial light transparency used until a message sets a runtime color.", this,
+          SLOT(updateVisualProperties()), this
+      )),
       off_alpha_property_(new rviz_common::properties::FloatProperty(
           "Off Alpha", 0.15f, "Transparency used when the light is off.", this, SLOT(updateVisualProperties()), this
       )),
@@ -45,9 +54,11 @@ LightDisplay::LightDisplay()
           "Off Color", QColor(40, 40, 40), "Fallback color shown while the light is off.", this,
           SLOT(updateVisualProperties()), this
       )),
-      active_color_(1.0f, 0.0f, 0.0f, 1.0f), brightness_(0.0f), enabled_(false)
+      active_color_(1.0f, 0.0f, 0.0f, 1.0f), brightness_(0.0f), enabled_(false), has_runtime_color_(false)
 {
     diameter_property_->setMin(0.001f);
+    default_alpha_property_->setMin(0.0f);
+    default_alpha_property_->setMax(1.0f);
     off_alpha_property_->setMin(0.0f);
     off_alpha_property_->setMax(1.0f);
 }
@@ -71,6 +82,8 @@ void LightDisplay::reset()
     RTDClass::reset();
     brightness_ = 0.0f;
     enabled_ = false;
+    has_runtime_color_ = false;
+    applyConfiguredColorIfNeeded();
     updateVisualProperties();
 }
 
@@ -82,9 +95,15 @@ void LightDisplay::update(float wall_dt, float ros_dt)
 
 void LightDisplay::processMessage(rviz_light_display::msg::LightCommand::ConstSharedPtr msg)
 {
-    active_color_ = Ogre::ColourValue(
-        clampUnit(msg->color.r), clampUnit(msg->color.g), clampUnit(msg->color.b), clampUnit(msg->color.a)
-    );
+    if (!msg->keep_color) {
+        active_color_ = Ogre::ColourValue(
+            clampUnit(msg->color.r), clampUnit(msg->color.g), clampUnit(msg->color.b), clampUnit(msg->color.a)
+        );
+        has_runtime_color_ = true;
+    } else {
+        applyConfiguredColorIfNeeded();
+    }
+
     brightness_ = clampUnit(msg->brightness);
     enabled_ = brightness_ > 0.0f;
 
@@ -94,6 +113,7 @@ void LightDisplay::processMessage(rviz_light_display::msg::LightCommand::ConstSh
 
 void LightDisplay::updateVisualProperties()
 {
+    applyConfiguredColorIfNeeded();
     updateScenePose();
     updateLightMaterial();
     queueRender();
@@ -195,6 +215,19 @@ void LightDisplay::updateLightMaterial()
     {
         pass->setSelfIllumination(0.0f, 0.0f, 0.0f);
     }
+}
+
+void LightDisplay::applyConfiguredColorIfNeeded()
+{
+    if (has_runtime_color_)
+    {
+        return;
+    }
+
+    const Ogre::ColourValue configured_color = default_color_property_->getOgreColor();
+    active_color_ = Ogre::ColourValue(
+        configured_color.r, configured_color.g, configured_color.b, clampUnit(default_alpha_property_->getFloat())
+    );
 }
 
 } // namespace rviz_light_display
