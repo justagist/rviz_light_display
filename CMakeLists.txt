@@ -70,6 +70,15 @@ install(DIRECTORY msg/
   DESTINATION share/${PROJECT_NAME}/msg
 )
 
+install(DIRECTORY examples/rviz/
+  DESTINATION share/${PROJECT_NAME}/examples/rviz
+)
+
+install(PROGRAMS
+  examples/light_display_demo.py
+  DESTINATION lib/${PROJECT_NAME}
+)
+
 install(FILES
   plugin_description.xml
   README.md

@@ -1,0 +1,448 @@
+Panels:
+  - Class: rviz_common/Displays
+    Help Height: 85
+    Name: Displays
+    Property Tree Widget:
+      Expanded:
+        - /Global Options1
+        - /Shape Samples1
+        - /Traffic Signal1
+        - /Beacon Light1
+      Splitter Ratio: 0.6000000238418579
+    Tree Height: 348
+  - Class: rviz_common/Views
+    Expanded:
+      - /Current View1
+    Name: Views
+    Splitter Ratio: 0.5
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Alpha: 0.5
+      Cell Size: 0.25
+      Class: rviz_default_plugins/Grid
+      Color: 140; 140; 140
+      Enabled: true
+      Line Style:
+        Line Width: 0.029999999329447746
+        Value: Lines
+      Name: Grid
+      Normal Cell Count: 0
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Plane: XY
+      Plane Cell Count: 16
+      Reference Frame: <Fixed Frame>
+      Value: true
+    - Class: rviz_common/Group
+      Displays:
+        - Class: rviz_light_display/LightDisplay
+          Default Alpha: 1
+          Default Color: 255; 42; 42
+          Depth: 0.25
+          Diameter: 0.25
+          Enabled: true
+          Height: 0.25
+          Light Frame: world
+          Name: DemoSphere
+          Off Alpha: 0.25
+          Off Color: 90; 20; 20
+          Orientation:
+            W: 1
+            X: 0
+            Y: 0
+            Z: 0
+          Position:
+            X: -1.2000000476837158
+            Y: -1
+            Z: 0.25
+          Shape: Sphere
+          Topic:
+            Depth: 5
+            Durability Policy: Transient Local
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /rviz_light_display_demo/sphere
+          Value: true
+          Width: 0.25
+        - Class: rviz_light_display/LightDisplay
+          Default Alpha: 1
+          Default Color: 0; 170; 255
+          Depth: 0.25
+          Diameter: 0.25
+          Enabled: true
+          Height: 0.25
+          Light Frame: world
+          Name: DemoCube
+          Off Alpha: 0.25
+          Off Color: 0; 48; 72
+          Orientation:
+            W: 1
+            X: 0
+            Y: 0
+            Z: 0
+          Position:
+            X: -0.4000000059604645
+            Y: -1
+            Z: 0.25
+          Shape: Cube
+          Topic:
+            Depth: 5
+            Durability Policy: Transient Local
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /rviz_light_display_demo/cube
+          Value: true
+          Width: 0.25
+        - Class: rviz_light_display/LightDisplay
+          Default Alpha: 1
+          Default Color: 51; 220; 95
+          Depth: 0.18000000715255737
+          Diameter: 0.18000000715255737
+          Enabled: true
+          Height: 0.44999998807907104
+          Light Frame: world
+          Name: DemoCylinder
+          Off Alpha: 0.25
+          Off Color: 12; 70; 26
+          Orientation:
+            W: 1
+            X: 0
+            Y: 0
+            Z: 0
+          Position:
+            X: 0.4000000059604645
+            Y: -1
+            Z: 0.30000001192092896
+          Shape: Cylinder
+          Topic:
+            Depth: 5
+            Durability Policy: Transient Local
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /rviz_light_display_demo/cylinder
+          Value: true
+          Width: 0.18000000715255737
+        - Class: rviz_light_display/LightDisplay
+          Default Alpha: 1
+          Default Color: 255; 92; 0
+          Depth: 0.2199999988079071
+          Diameter: 0.2199999988079071
+          Enabled: true
+          Height: 0.44999998807907104
+          Light Frame: world
+          Name: DemoCone
+          Off Alpha: 0.25
+          Off Color: 88; 32; 0
+          Orientation:
+            W: 1
+            X: 0
+            Y: 0
+            Z: 0
+          Position:
+            X: 1.2000000476837158
+            Y: -1
+            Z: 0.30000001192092896
+          Shape: Cone
+          Topic:
+            Depth: 5
+            Durability Policy: Transient Local
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /rviz_light_display_demo/cone
+          Value: true
+          Width: 0.2199999988079071
+      Enabled: true
+      Name: Shape Samples
+    - Class: rviz_common/Group
+      Displays:
+        - Class: rviz_light_display/LightDisplay
+          Default Alpha: 1
+          Default Color: 20; 20; 20
+          Depth: 0.10000000149011612
+          Diameter: 0.10000000149011612
+          Enabled: true
+          Height: 0.949999988079071
+          Light Frame: world
+          Name: TrafficHousing
+          Off Alpha: 1
+          Off Color: 20; 20; 20
+          Orientation:
+            W: 1
+            X: 0
+            Y: 0
+            Z: 0
+          Position:
+            X: -0.699999988079071
+            Y: 0.800000011920929
+            Z: 0.8999999761581421
+          Shape: Cube
+          Topic:
+            Depth: 5
+            Durability Policy: Transient Local
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /rviz_light_display_demo/traffic/housing
+          Value: true
+          Width: 0.3799999952316284
+        - Class: rviz_light_display/LightDisplay
+          Default Alpha: 1
+          Default Color: 255; 0; 0
+          Depth: 0.2199999988079071
+          Diameter: 0.2199999988079071
+          Enabled: true
+          Height: 0.2199999988079071
+          Light Frame: world
+          Name: TrafficRed
+          Off Alpha: 0.3499999940395355
+          Off Color: 90; 0; 0
+          Orientation:
+            W: 1
+            X: 0
+            Y: 0
+            Z: 0
+          Position:
+            X: -0.699999988079071
+            Y: 0.7200000286102295
+            Z: 1.2000000476837158
+          Shape: Sphere
+          Topic:
+            Depth: 5
+            Durability Policy: Transient Local
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /rviz_light_display_demo/traffic/red
+          Value: true
+          Width: 0.2199999988079071
+        - Class: rviz_light_display/LightDisplay
+          Default Alpha: 1
+          Default Color: 255; 170; 0
+          Depth: 0.2199999988079071
+          Diameter: 0.2199999988079071
+          Enabled: true
+          Height: 0.2199999988079071
+          Light Frame: world
+          Name: TrafficAmber
+          Off Alpha: 0.3499999940395355
+          Off Color: 96; 58; 0
+          Orientation:
+            W: 1
+            X: 0
+            Y: 0
+            Z: 0
+          Position:
+            X: -0.699999988079071
+            Y: 0.7200000286102295
+            Z: 0.8999999761581421
+          Shape: Sphere
+          Topic:
+            Depth: 5
+            Durability Policy: Transient Local
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /rviz_light_display_demo/traffic/amber
+          Value: true
+          Width: 0.2199999988079071
+        - Class: rviz_light_display/LightDisplay
+          Default Alpha: 1
+          Default Color: 0; 255; 0
+          Depth: 0.2199999988079071
+          Diameter: 0.2199999988079071
+          Enabled: true
+          Height: 0.2199999988079071
+          Light Frame: world
+          Name: TrafficGreen
+          Off Alpha: 0.3499999940395355
+          Off Color: 0; 86; 0
+          Orientation:
+            W: 1
+            X: 0
+            Y: 0
+            Z: 0
+          Position:
+            X: -0.699999988079071
+            Y: 0.7200000286102295
+            Z: 0.6000000238418579
+          Shape: Sphere
+          Topic:
+            Depth: 5
+            Durability Policy: Transient Local
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /rviz_light_display_demo/traffic/green
+          Value: true
+          Width: 0.2199999988079071
+      Enabled: true
+      Name: Traffic Signal
+    - Class: rviz_common/Group
+      Displays:
+        - Class: rviz_light_display/LightDisplay
+          Default Alpha: 1
+          Default Color: 255; 0; 0
+          Depth: 0.25999999046325684
+          Diameter: 0.25999999046325684
+          Enabled: true
+          Height: 0.11999999731779099
+          Light Frame: world
+          Name: BeaconRed
+          Off Alpha: 0.3499999940395355
+          Off Color: 90; 0; 0
+          Orientation:
+            W: 1
+            X: 0
+            Y: 0
+            Z: 0
+          Position:
+            X: 0.699999988079071
+            Y: 0.75
+            Z: 1.0499999523162842
+          Shape: Cylinder
+          Topic:
+            Depth: 5
+            Durability Policy: Transient Local
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /rviz_light_display_demo/beacon/red
+          Value: true
+          Width: 0.25999999046325684
+        - Class: rviz_light_display/LightDisplay
+          Default Alpha: 1
+          Default Color: 255; 170; 0
+          Depth: 0.25999999046325684
+          Diameter: 0.25999999046325684
+          Enabled: true
+          Height: 0.11999999731779099
+          Light Frame: world
+          Name: BeaconAmber
+          Off Alpha: 0.3499999940395355
+          Off Color: 96; 58; 0
+          Orientation:
+            W: 1
+            X: 0
+            Y: 0
+            Z: 0
+          Position:
+            X: 0.699999988079071
+            Y: 0.75
+            Z: 0.8999999761581421
+          Shape: Cylinder
+          Topic:
+            Depth: 5
+            Durability Policy: Transient Local
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /rviz_light_display_demo/beacon/amber
+          Value: true
+          Width: 0.25999999046325684
+        - Class: rviz_light_display/LightDisplay
+          Default Alpha: 1
+          Default Color: 0; 255; 0
+          Depth: 0.25999999046325684
+          Diameter: 0.25999999046325684
+          Enabled: true
+          Height: 0.11999999731779099
+          Light Frame: world
+          Name: BeaconGreen
+          Off Alpha: 0.3499999940395355
+          Off Color: 0; 86; 0
+          Orientation:
+            W: 1
+            X: 0
+            Y: 0
+            Z: 0
+          Position:
+            X: 0.699999988079071
+            Y: 0.75
+            Z: 0.75
+          Shape: Cylinder
+          Topic:
+            Depth: 5
+            Durability Policy: Transient Local
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /rviz_light_display_demo/beacon/green
+          Value: true
+          Width: 0.25999999046325684
+        - Class: rviz_light_display/LightDisplay
+          Default Alpha: 1
+          Default Color: 0; 85; 255
+          Depth: 0.25999999046325684
+          Diameter: 0.25999999046325684
+          Enabled: true
+          Height: 0.11999999731779099
+          Light Frame: world
+          Name: BeaconBlue
+          Off Alpha: 0.3499999940395355
+          Off Color: 0; 30; 96
+          Orientation:
+            W: 1
+            X: 0
+            Y: 0
+            Z: 0
+          Position:
+            X: 0.699999988079071
+            Y: 0.75
+            Z: 0.6000000238418579
+          Shape: Cylinder
+          Topic:
+            Depth: 5
+            Durability Policy: Transient Local
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /rviz_light_display_demo/beacon/blue
+          Value: true
+          Width: 0.25999999046325684
+      Enabled: true
+      Name: Beacon Light
+  Enabled: true
+  Global Options:
+    Background Color: 48; 48; 48
+    Fixed Frame: world
+    Frame Rate: 60
+  Name: root
+  Tools:
+    - Class: rviz_default_plugins/Interact
+      Hide Inactive Objects: true
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/Select
+  Transformation:
+    Current:
+      Class: rviz_default_plugins/TF
+  Value: true
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Distance: 6.079373359680176
+      Enable Stereo Rendering:
+        Stereo Eye Separation: 0.05999999865889549
+        Stereo Focal Distance: 1
+        Swap Stereo Eyes: false
+        Value: false
+      Focal Point:
+        X: 0
+        Y: 0
+        Z: 0.6000000238418579
+      Focal Shape Fixed Size: true
+      Focal Shape Size: 0.05000000074505806
+      Invert Z Axis: false
+      Name: Current View
+      Near Clip Distance: 0.009999999776482582
+      Pitch: 0.20000043511390686
+      Target Frame: <Fixed Frame>
+      Value: Orbit (rviz)
+      Yaw: 4.84499454498291
+    Saved: ~
+Window Geometry:
+  Displays:
+    collapsed: false
+  Height: 900
+  Hide Left Dock: false
+  Hide Right Dock: false
+  QMainWindow State: 000000ff00000000fd00000001000000000000019b0000032efc0200000002fb000000100044006900730070006c006100790073010000003b000001ec000000c700fffffffb0000000a00560069006500770073010000022d0000013c000000a000ffffff000003d70000032e00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  Views:
+    collapsed: false
+  Width: 1400
+  X: 50
+  Y: 50

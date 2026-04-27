@@ -1,5 +1,7 @@
 # rviz_light_display
 
+[![Demo](https://media.githubusercontent.com/media/justagist/_assets/refs/heads/main/rviz_light_display/rviz_light_display.gif)](examples/light_display_demo.py)
+
 `rviz_light_display` is a self-contained rviz2 display plugin for status lights.
 
 Each display instance stores:
@@ -80,4 +82,13 @@ Turn it off while keeping the current color for the next update:
 ```bash
 ros2 topic pub /status_light rviz_light_display/msg/LightCommand \
   "{color: {r: 0.0, g: 0.0, b: 0.0, a: 0.0}, brightness: 0.0, keep_color: true}"
+```
+
+## Demo config
+
+This package includes an rviz demo with the supported shapes, a traffic signal, and a four-cylinder beacon light:
+
+```bash
+rviz2 -d install/share/rviz_light_display/examples/rviz/light_display_shapes_demo.rviz
+ros2 run rviz_light_display light_display_demo.py
 ```
