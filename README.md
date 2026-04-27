@@ -5,7 +5,7 @@
 Each display instance stores:
 - A TF frame
 - A pose relative to that frame
-- Visual sizing and off-state appearance
+- Visual shape, sizing, and off-state appearance
 - A default rgba value used before any runtime color is received
 
 Runtime updates only need to publish a `rviz_light_display/msg/LightCommand` message on the configured topic.
@@ -13,6 +13,11 @@ Runtime updates only need to publish a `rviz_light_display/msg/LightCommand` mes
 ## Display properties
 
 When you first add the display in rviz, you can set:
+- `Shape` (`Sphere`, `Cylinder`, `Cube`, or `Cone`)
+- `Diameter` for spheres, cylinders, and cones
+- `Height` for cylinders, cones, and cubes
+- `Width` and `Depth` for cubes
+- `Orientation`, applied after each shape's upright default orientation
 - `Default Color`
 - `Default Alpha`
 
@@ -44,7 +49,7 @@ There is no separate enable flag, so OFF vs dim vs ON is controlled only by `bri
 
 1. Build and source the workspace.
 2. Open rviz2 and add `rviz_light_display/LightDisplay`.
-3. Set `Topic`, `Light Frame`, `Position`, and optionally `Orientation`, `Diameter`, `Default Color`, and `Default Alpha`.
+3. Set `Topic`, `Light Frame`, `Position`, and optionally `Orientation`, `Shape`, dimensions, `Default Color`, and `Default Alpha`.
 4. Publish updates to the chosen topic without resending the pose.
 
 ## Example

@@ -20,6 +20,14 @@ namespace
 
 float clampUnit(float value) { return std::clamp(value, 0.0f, 1.0f); }
 
+enum ShapeOption
+{
+    ShapeOptionSphere,
+    ShapeOptionCylinder,
+    ShapeOptionCube,
+    ShapeOptionCone,
+};
+
 } // namespace
 
 LightDisplay::LightDisplay()
@@ -32,11 +40,25 @@ LightDisplay::LightDisplay()
           SLOT(updateVisualProperties()), this
       )),
       orientation_property_(new rviz_common::properties::QuaternionProperty(
-          "Orientation", Ogre::Quaternion::IDENTITY, "Light orientation relative to the selected frame.", this,
-          SLOT(updateVisualProperties()), this
+          "Orientation", Ogre::Quaternion::IDENTITY, "Additional light orientation relative to the selected frame.",
+          this, SLOT(updateVisualProperties()), this
+      )),
+      shape_property_(new rviz_common::properties::EnumProperty(
+          "Shape", "Sphere", "Rendered light shape.", this, SLOT(updateVisualProperties()), this
       )),
       diameter_property_(new rviz_common::properties::FloatProperty(
-          "Diameter", 0.05f, "Rendered diameter of the light in meters.", this, SLOT(updateVisualProperties()), this
+          "Diameter", 0.05f, "Rendered diameter of round light shapes in meters.", this, SLOT(updateVisualProperties()),
+          this
+      )),
+      width_property_(new rviz_common::properties::FloatProperty(
+          "Width", 0.05f, "Rendered cube width in meters.", this, SLOT(updateVisualProperties()), this
+      )),
+      depth_property_(new rviz_common::properties::FloatProperty(
+          "Depth", 0.05f, "Rendered cube depth in meters.", this, SLOT(updateVisualProperties()), this
+      )),
+      height_property_(new rviz_common::properties::FloatProperty(
+          "Height", 0.05f, "Rendered cylinder, cone, or cube height in meters.", this, SLOT(updateVisualProperties()),
+          this
       )),
       default_color_property_(new rviz_common::properties::ColorProperty(
           "Default Color", QColor(255, 0, 0), "Initial light color used until a message sets a runtime color.", this,
@@ -55,11 +77,20 @@ LightDisplay::LightDisplay()
       )),
       active_color_(1.0f, 0.0f, 0.0f, 1.0f), brightness_(0.0f), enabled_(false), has_runtime_color_(false)
 {
+    shape_property_->addOption("Sphere", ShapeOptionSphere);
+    shape_property_->addOption("Cylinder", ShapeOptionCylinder);
+    shape_property_->addOption("Cube", ShapeOptionCube);
+    shape_property_->addOption("Cone", ShapeOptionCone);
+
     diameter_property_->setMin(0.001f);
+    width_property_->setMin(0.001f);
+    depth_property_->setMin(0.001f);
+    height_property_->setMin(0.001f);
     default_alpha_property_->setMin(0.0f);
     default_alpha_property_->setMax(1.0f);
     off_alpha_property_->setMin(0.0f);
     off_alpha_property_->setMax(1.0f);
+    updateDimensionProperties();
 }
 
 LightDisplay::~LightDisplay() = default;
@@ -69,10 +100,7 @@ void LightDisplay::onInitialize()
     RTDClass::onInitialize();
     frame_property_->setFrameManager(context_->getFrameManager());
 
-    light_shape_ = std::make_unique<rviz_rendering::Shape>(
-        rviz_rendering::Shape::Sphere, context_->getSceneManager(), scene_node_
-    );
-
+    updateLightShape();
     updateVisualProperties();
 }
 
@@ -115,6 +143,8 @@ void LightDisplay::processMessage(rviz_light_display::msg::LightCommand::ConstSh
 
 void LightDisplay::updateVisualProperties()
 {
+    updateLightShape();
+    updateDimensionProperties();
     applyConfiguredColorIfNeeded();
     updateScenePose();
     updateLightMaterial();
@@ -135,6 +165,85 @@ geometry_msgs::msg::Pose LightDisplay::getConfiguredPose() const
     pose.orientation.z = orientation.z;
     pose.orientation.w = orientation.w;
     return pose;
+}
+
+rviz_rendering::Shape::Type LightDisplay::getConfiguredShape() const
+{
+    switch (shape_property_->getOptionInt())
+    {
+    case ShapeOptionCylinder:
+        return rviz_rendering::Shape::Cylinder;
+    case ShapeOptionCube:
+        return rviz_rendering::Shape::Cube;
+    case ShapeOptionCone:
+        return rviz_rendering::Shape::Cone;
+    case ShapeOptionSphere:
+    default:
+        return rviz_rendering::Shape::Sphere;
+    }
+}
+
+Ogre::Quaternion LightDisplay::getShapeUprightOrientation() const
+{
+    switch (shape_property_->getOptionInt())
+    {
+    // for cone and cylinder, make sure default orientation is upright (default ogre orientation is normal along Y axis)
+    case ShapeOptionCylinder:
+    case ShapeOptionCone:
+        return Ogre::Quaternion(Ogre::Degree(90.0f), Ogre::Vector3::UNIT_X);
+    case ShapeOptionCube:
+    case ShapeOptionSphere:
+    default:
+        return Ogre::Quaternion::IDENTITY;
+    }
+}
+
+Ogre::Vector3 LightDisplay::getConfiguredScale() const
+{
+    const float diameter = std::max(diameter_property_->getFloat(), 0.001f);
+    const float width = std::max(width_property_->getFloat(), 0.001f);
+    const float depth = std::max(depth_property_->getFloat(), 0.001f);
+    const float height = std::max(height_property_->getFloat(), 0.001f);
+
+    switch (shape_property_->getOptionInt())
+    {
+    case ShapeOptionCylinder:
+    case ShapeOptionCone:
+        return Ogre::Vector3(diameter, height, diameter);
+    case ShapeOptionCube:
+        return Ogre::Vector3(width, depth, height);
+    case ShapeOptionSphere:
+    default:
+        return Ogre::Vector3(diameter, diameter, diameter);
+    }
+}
+
+void LightDisplay::updateLightShape()
+{
+    if (context_ == nullptr)
+    {
+        return;
+    }
+
+    const rviz_rendering::Shape::Type shape_type = getConfiguredShape();
+    if (light_shape_ && light_shape_->getType() == shape_type)
+    {
+        return;
+    }
+
+    light_shape_ = std::make_unique<rviz_rendering::Shape>(shape_type, context_->getSceneManager(), scene_node_);
+}
+
+void LightDisplay::updateDimensionProperties()
+{
+    const int shape = shape_property_->getOptionInt();
+    const bool is_cube = shape == ShapeOptionCube;
+    const bool has_height = is_cube || shape == ShapeOptionCylinder || shape == ShapeOptionCone;
+
+    diameter_property_->setHidden(is_cube);
+    width_property_->setHidden(!is_cube);
+    depth_property_->setHidden(!is_cube);
+    height_property_->setHidden(!has_height);
 }
 
 void LightDisplay::updateScenePose()
@@ -167,10 +276,9 @@ void LightDisplay::updateScenePose()
     }
 
     light_shape_->setPosition(position);
-    light_shape_->setOrientation(orientation);
+    light_shape_->setOrientation(orientation * getShapeUprightOrientation());
 
-    const float diameter = std::max(diameter_property_->getFloat(), 0.001f);
-    light_shape_->setScale(Ogre::Vector3(diameter, diameter, diameter));
+    light_shape_->setScale(getConfiguredScale());
     light_shape_->getRootNode()->setVisible(true);
     setTransformOk();
 }
